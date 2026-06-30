@@ -1,0 +1,178 @@
+/**
+ * Issue Card Styles
+ */
+
+.issue-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s;
+  border-left: 4px solid var(--primary-color);
+}
+
+.issue-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.issue-title {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-primary);
+  font-size: 1.3rem;
+}
+
+.issue-reporter {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.issue-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.issue-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.issue-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 1rem 0;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+}
+
+.meta-item strong {
+  margin-right: 0.5rem;
+  color: var(--text-primary);
+}
+
+.issue-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.action-select {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  background-color: white;
+  cursor: pointer;
+}
+
+.action-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+/* Feedback section styles */
+.employee-feedback-display {
+  background-color: #f1f8ff;
+  border-left: 4px solid #0366d6;
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.feedback-display-title {
+  color: #0366d6;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.feedback-display-content {
+  color: var(--text-primary);
+  margin: 0;
+  font-style: italic;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+}
+
+.manager-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border-color);
+}
+
+.manager-feedback-input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.feedback-textarea {
+  min-height: 80px;
+  font-size: 0.95rem;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  resize: vertical;
+  background-color: #fafafa;
+}
+
+.feedback-textarea:focus {
+  background-color: white;
+}
+
+.save-feedback-btn {
+  align-self: flex-end;
+}
+
+@media (max-width: 768px) {
+  .card-header-row {
+    flex-direction: column;
+  }
+
+  .issue-badges {
+    justify-content: flex-start;
+  }
+
+  .issue-meta {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .issue-actions {
+    flex-direction: column;
+  }
+
+  .action-select {
+    width: 100%;
+  }
+
+  .save-feedback-btn {
+    width: 100%;
+  }
+}

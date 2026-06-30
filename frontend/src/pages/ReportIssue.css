@@ -1,0 +1,71 @@
+/**
+ * Report Issue Styles
+ */
+
+.report-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.report-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+}
+
+.report-card h2 {
+  margin-bottom: 0.5rem;
+}
+
+.report-subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.char-count {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+.info-box {
+  background-color: rgba(25, 118, 210, 0.05);
+  border-left: 4px solid var(--primary-color);
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin: 1.5rem 0;
+}
+
+.info-box h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--primary-color);
+}
+
+.info-box p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.form-actions .btn {
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  .report-card {
+    padding: 1.5rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+}

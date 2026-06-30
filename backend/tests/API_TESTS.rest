@@ -1,0 +1,358 @@
+/**
+ * API Test Cases
+ * Sample requests and responses for all endpoints
+ * 
+ * You can import this in Postman or use it as a reference
+ */
+
+// ============================================================
+// AUTHENTICATION ENDPOINTS
+// ============================================================
+
+/**
+ * 1. SIGNUP - Create new user account
+ * POST /api/auth/signup
+ */
+POST http://localhost:5000/api/auth/signup
+Content-Type: application/json
+
+{
+  "username": "john_doe",
+  "email": "john@example.com",
+  "password": "SecurePass123!",
+  "role": "Employee"
+}
+
+// Expected Response (201 Created):
+{
+  "success": true,
+  "message": "User registered successfully",
+  "data": {
+    "user": {
+      "userId": 1,
+      "username": "john_doe",
+      "email": "john@example.com",
+      "role": "Employee"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+
+---
+
+/**
+ * 2. LOGIN - Authenticate user
+ * POST /api/auth/login
+ */
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "SecurePass123!"
+}
+
+// Expected Response (200 OK):
+{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "user": {
+      "userId": 1,
+      "username": "john_doe",
+      "email": "john@example.com",
+      "role": "Employee"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+
+---
+
+/**
+ * 3. GET PROFILE - Get current user info
+ * GET /api/auth/profile
+ */
+GET http://localhost:5000/api/auth/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+// Expected Response (200 OK):
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "username": "john_doe",
+    "email": "john@example.com",
+    "role": "Employee",
+    "created_at": "2024-01-15T10:30:00.000Z"
+  }
+}
+
+---
+
+/**
+ * 4. VERIFY TOKEN - Check if token is valid
+ * POST /api/auth/verify
+ */
+POST http://localhost:5000/api/auth/verify
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+
+// Expected Response (200 OK):
+{
+  "success": true,
+  "data": {
+    "valid": true,
+    "user": {
+      "id": 1,
+      "username": "john_doe",
+      "email": "john@example.com",
+      "role": "Employee",
+      "created_at": "2024-01-15T10:30:00.000Z"
+    }
+  }
+}
+
+---
+
+// ============================================================
+// ISSUE ENDPOINTS
+// ============================================================
+
+/**
+ * 5. CREATE ISSUE - Report a new issue
+ * POST /api/issues
+ */
+POST http://localhost:5000/api/issues
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Content-Type: application/json
+
+{
+  "title": "Login page crashes on Safari",
+  "description": "When I try to log in from Safari browser, the page crashes and I get a white screen. This is critical as it prevents me from accessing the system.",
+  "category": "Bug"
+}
+
+// Expected Response (201 Created):
+{
+  "success": true,
+  "message": "Issue reported successfully",
+  "data": {
+    "issueId": 1,
+    "userId": 1,
+    "title": "Login page crashes on Safari",
+    "description": "When I try to log in from Safari browser...",
+    "category": "Bug",
+    "priority": "High",
+    "status": "Pending",
+    "aiClassification": {
+      "priority": "High",
+      "suggestedCategory": "Bug"
+    }
+  }
+}
+
+---
+
+/**
+ * 6. GET ALL ISSUES - Retrieve issues with filters
+ * GET /api/issues?status=Pending&priority=High&page=1&limit=10
+ */
+GET http://localhost:5000/api/issues?status=Pending&priority=High&sortBy=created_at&page=1&limit=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+// Expected Response (200 OK):
+{
+  "success": true,
+  "data": {
+    "issues": [
+      {
+        "id": 1,
+        "user_id": 1,
+        "title": "Login page crashes",
+        "description": "...",
+        "category": "Bug",
+        "priority": "High",
+        "status": "Pending",
+        "created_at": "2024-01-15T10:30:00.000Z",
+        "updated_at": "2024-01-15T10:30:00.000Z",
+        "username": "john_doe",
+        "email": "john@example.com"
+      }
+    ],
+    "total": 1,
+    "pages": 1,
+    "currentPage": 1
+  }
+}
+
+---
+
+/**
+ * 7. GET SINGLE ISSUE - Get details of one issue
+ * GET /api/issues/:issueId
+ */
+GET http://localhost:5000/api/issues/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+// Expected Response (200 OK):
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "user_id": 1,
+    "title": "Login page crashes",
+    "description": "...",
+    "category": "Bug",
+    "priority": "High",
+    "status": "Pending",
+    "created_at": "2024-01-15T10:30:00.000Z",
+    "updated_at": "2024-01-15T10:30:00.000Z",
+    "username": "john_doe",
+    "email": "john@example.com"
+  }
+}
+
+---
+
+/**
+ * 8. UPDATE ISSUE STATUS - Change status (Manager only)
+ * PATCH /api/issues/:issueId/status
+ */
+PATCH http://localhost:5000/api/issues/1/status
+Authorization: Bearer [MANAGER_TOKEN]
+Content-Type: application/json
+
+{
+  "status": "In Progress"
+}
+
+// Expected Response (200 OK):
+{
+  "success": true,
+  "message": "Issue status updated successfully",
+  "data": {
+    "id": 1,
+    "status": "In Progress",
+    "updated_at": "2024-01-15T11:00:00.000Z",
+    ...
+  }
+}
+
+---
+
+/**
+ * 9. UPDATE ISSUE PRIORITY - Change priority (Manager only)
+ * PATCH /api/issues/:issueId/priority
+ */
+PATCH http://localhost:5000/api/issues/1/priority
+Authorization: Bearer [MANAGER_TOKEN]
+Content-Type: application/json
+
+{
+  "priority": "High"
+}
+
+// Expected Response (200 OK):
+{
+  "success": true,
+  "message": "Issue priority updated successfully",
+  "data": {
+    "id": 1,
+    "priority": "High",
+    "updated_at": "2024-01-15T11:00:00.000Z",
+    ...
+  }
+}
+
+---
+
+/**
+ * 10. GET ESCALATION REPORT - Get issues pending > 24 hours (Manager only)
+ * GET /api/issues/escalation/report
+ */
+GET http://localhost:5000/api/issues/escalation/report
+Authorization: Bearer [MANAGER_TOKEN]
+
+// Expected Response (200 OK):
+{
+  "success": true,
+  "data": {
+    "escalationThreshold": "24 hours",
+    "count": 2,
+    "issues": [
+      {
+        "id": 1,
+        "title": "Login page crashes",
+        "priority": "High",
+        "status": "Pending",
+        "created_at": "2024-01-14T08:00:00.000Z",
+        ...
+      }
+    ]
+  }
+}
+
+---
+
+/**
+ * 11. DELETE ISSUE - Remove an issue
+ * DELETE /api/issues/:issueId
+ */
+DELETE http://localhost:5000/api/issues/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+// Expected Response (200 OK):
+{
+  "success": true,
+  "message": "Issue deleted successfully"
+}
+
+---
+
+// ============================================================
+// ERROR RESPONSES
+// ============================================================
+
+/**
+ * 400 Bad Request - Missing required field
+ */
+{
+  "success": false,
+  "message": "Title must be between 5 and 200 characters"
+}
+
+/**
+ * 401 Unauthorized - Invalid token
+ */
+{
+  "success": false,
+  "message": "Invalid or expired token"
+}
+
+/**
+ * 403 Forbidden - Insufficient permissions
+ */
+{
+  "success": false,
+  "message": "Only managers can update issue status"
+}
+
+/**
+ * 404 Not Found - Resource not found
+ */
+{
+  "success": false,
+  "message": "Issue not found"
+}
+
+/**
+ * 500 Internal Server Error
+ */
+{
+  "success": false,
+  "message": "An error occurred"
+}
