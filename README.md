@@ -490,6 +490,5 @@ mysql -u root -p
 
 Then open `http://localhost:3000` and start using the system!
 
----
 
-**Built with ❤️ for efficient error management**
+Built with ❤️ for efficient error management
