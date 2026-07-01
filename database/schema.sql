@@ -1,7 +1,7 @@
 /**
  * MySQL Database Schema
  * Run this script to initialize the database
- * 
+ 
  * Usage:
  * mysql -u root -p < schema.sql
  */
@@ -82,7 +82,3 @@ CREATE TABLE activity_logs (
   INDEX idx_created_at (created_at)
 );
 
--- Sample Data for Testing (optional)
--- INSERT INTO users (username, email, password, role) VALUES
--- ('manager1', 'manager@example.com', '$2a$10$...hashed_password...', 'Manager'),
--- ('employee1', 'employee@example.com', '$2a$10$...hashed_password...', 'Employee');
